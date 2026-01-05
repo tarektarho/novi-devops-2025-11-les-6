@@ -28,7 +28,7 @@ COPY src ./src/
 
 # Maak non-root user voor security
 RUN addgroup -g 1001 -S nodejs && \
-    adduser -S nodejs -u 1001 -G nodejs
+  adduser -S nodejs -u 1001 -G nodejs
 
 USER nodejs
 

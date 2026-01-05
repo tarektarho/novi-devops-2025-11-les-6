@@ -7,7 +7,7 @@ app.use(express.json());
 // Routes
 app.get('/', (req, res) => {
   res.json({
-    message: 'Welcome to the Les 5 API!',
+    message: 'Welcome to the Les 6 API!',
     version: process.env.APP_VERSION || '1.0.0',
     environment: process.env.NODE_ENV || 'development'
   });
@@ -17,7 +17,8 @@ app.get('/health', (req, res) => {
   res.json({
     status: 'healthy',
     timestamp: new Date().toISOString(),
-    uptime: process.uptime()
+    uptime: process.uptime(),
+    version: process.env.APP_VERSION || '1.0.0',
   });
 });
 
@@ -29,28 +30,28 @@ app.get('/api/items', (req, res) => {
 app.get('/api/items/:id', (req, res) => {
   const items = require('./data');
   const item = items.getById(parseInt(req.params.id));
-  
+
   if (!item) {
     return res.status(404).json({ error: 'Item not found' });
   }
-  
+
   res.json(item);
 });
 
 app.post('/api/items', (req, res) => {
   const items = require('./data');
   const { name, description } = req.body;
-  
+
   if (!name) {
     return res.status(400).json({ error: 'Name is required' });
   }
-  
+
   const newItem = items.create({ name, description });
   res.status(201).json(newItem);
 });
 
 // Error handling
-app.use((err, req, res, next) => {
+app.use((err, req, res) => {
   console.error(err.stack);
   res.status(500).json({ error: 'Something went wrong!' });
 });
