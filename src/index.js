@@ -32,7 +32,7 @@ app.get('/api/items/:id', (req, res) => {
   const item = items.getById(parseInt(req.params.id));
 
   if (!item) {
-    return res.status(404).json({ error: 'Item not found' });
+    return res.status(404).json({ error: 'Item not found.' });
   }
 
   res.json(item);
